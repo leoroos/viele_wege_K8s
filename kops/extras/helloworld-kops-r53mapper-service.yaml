@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: helloworld
+  name: helloworld
+  annotations:
+    domainName: "helloworld.k8s.lroos.de"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: |-
+       arn:aws:acm:eu-central-1:AWS_ACCOUNT_NUMBER:certificate/6ce986ba-1193-43ee-8d67-3df8c4e6149e
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+spec:
+  ports:
+  -
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  -
+    port: 443
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: helloworld
+  type: LoadBalancer

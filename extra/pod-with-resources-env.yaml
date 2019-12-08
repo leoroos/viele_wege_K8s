@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+  labels:
+    app: hello-pod
+spec:
+  containers:
+  - name: hello-pod
+    imagePullPolicy: Never
+    image: helloworld
+    env:
+    - name: CONFIGURATION_OPTION
+      value: "optionvalue"
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"

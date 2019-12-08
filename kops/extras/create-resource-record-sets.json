@@ -1,0 +1,18 @@
+{
+  "Comment": "create subdomain to forward to alb",
+  "Changes": [
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "hellonode.k8s.lroos.de",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "a8babe114d41511e9af2c021581607d9-1164577659.eu-central-1.elb.amazonaws.com"
+          }
+        ]
+      }
+    }
+  ]
+}

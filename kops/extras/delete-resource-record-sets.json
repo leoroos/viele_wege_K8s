@@ -1,0 +1,18 @@
+{
+  "Comment": "delete subdomain to forward to alb",
+  "Changes": [
+    {
+      "Action": "DELETE",
+      "ResourceRecordSet": {
+        "Name": "hellonode.k8s.lroos.de",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "a3e36b9604a9111e9bfdb06c787413c6-806524193.eu-central-1.elb.amazonaws.com"
+          }
+      }
+    }
+  ]
+}
+
