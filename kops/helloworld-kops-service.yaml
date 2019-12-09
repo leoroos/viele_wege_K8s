@@ -4,13 +4,12 @@ metadata:
   labels:
     app: helloworld
   name: helloworld
-  namespace: default
 spec:
+  selector:
+    app: helloworld
+  type: LoadBalancer
   ports:
   -
     port: 80
     protocol: TCP
     targetPort: 8080
-  selector:
-    app: helloworld
-  type: LoadBalancer
