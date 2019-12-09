@@ -1,0 +1,68 @@
+cd wss/ittage
+cd example_app
+cat server.js
+cat Dockerfile
+minikube docker-env
+export DOCKER_TLS_VERIFY="1"\nexport DOCKER_HOST="tcp://192.168.64.4:2376"\nexport DOCKER_CERT_PATH="/Users/leo/.minikube/certs"
+docker ps
+cd minikube
+vim helloworld-pod.yaml
+kubectl apply -f helloworld-pod.yaml && kubectl get pod
+NO -> kubectl logs hello-pod
+vim ../example_app/server.js
+kubectl exec hello-pod pwd
+kubectl exec hello-pod -- wget localhost:8080 -O -
+vim helloworld-pod-service.yaml
+kubectl apply -f helloworld-pod-service.yaml
+kubectl get nodes
+kubectl get nodes -o wide
+curl 192.168.64.4:32521
+kubectl apply -f helloworld-deployment.yaml && kubectl get pod --watch
+kubectl get pods
+vim helloworld-deployment-service.yaml
+kubectl get pod --show-lables
+kubectl get pod --show-labels
+kubectl apply -f helloworld-deployment-service.yaml
+curl 192.168.64.4:31771
+while true; do curl 192.168.64.4:31771; sleep .5; done
+docker build . --tag helloworld
+docker build . --tag helloworld:2
+cd ../minikube
+vim helloworld-deployment.yaml
+kubectl apply -f helloworld-deployment.yaml && kubectl get pods --watch
+cd ../kops/
+export KOPS_STATE_STORE=s3://clusters.k8s.lroos.de
+export NAME=ittage.k8s.lroos.de
+export ZONES=eu-central-1a,eu-central-1b,eu-central-1c
+kops create cluster --zones $ZONES --state $KOPS_STATE_STORE $NAME
+kops edit cluster ittage.k8s.lroos.de
+kops update cluster --name ittage.k8s.lroos.de --yes
+aws ecr get-login --no-include-email
+docker login ....
+docker images
+docker tag helloworld:2 AWS_ACCOUNT_NUMBER.dkr.ecr.eu-central-1.amazonaws.com/lroos-helloworld:2
+docker push AWS_ACCOUNT_NUMBER.dkr.ecr.eu-central-1.amazonaws.com/lroos-helloworld:2
+kubectl get version
+kubectl version
+kubectl get pod
+cd ../kops
+vim helloworld-kops-deployment.yaml
+kubectl apply -f helloworld-kops-deployment.yaml
+kubectl get pods --watch
+vim helloworld-kops-service.yaml
+kubectl apply -f helloworld-kops-service.yaml
+kubectl get service
+curl a5fecab7f612e40799b5009dbc76ce76-263294716.eu-central-1.elb.amazonaws.com
+sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;
+curl helloworld.k8s.lroos.de
+cd ../example_app
+vim server.js
+cat build.sh
+./build.sh ecr
+vim ../kops/helloworld-kops-deployment.yaml
+while true; do curl helloworld.k8s.lroos.de; sleep .5; done
+kubectl apply -f helloworld-kops-deployment.yaml && kubectl get pods --watch
+kops validate cluster
+kops delete cluster $NAME
+kubectl rollout status deployment helloworld
+kubectl rollout undo deployment helloworld
