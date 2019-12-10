@@ -66,3 +66,7 @@ kops validate cluster
 kops delete cluster $NAME
 kubectl rollout status deployment helloworld
 kubectl rollout undo deployment helloworld
+kubectl config set-context --current=true --cluster=minikube --namespace=default
+kubectl config view
+kubectl config get-contexts
+kubectl config get-clusters
